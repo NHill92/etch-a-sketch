@@ -1,5 +1,4 @@
 const container = document.querySelector('.container');
-const boxes = document.querySelectorAll('.box');
 const resetBtn = document.querySelector('#reset');
 
 let grid;
@@ -12,18 +11,23 @@ function createGrid() {
         container.appendChild(grid);
 
         grid.addEventListener('mouseover', blackHover);
-
-        function blackHover(e) {
-            e.target.style.backgroundColor = 'black';
-        }
     }
 }
 
 resetBtn.addEventListener('click', (e) => {
-    while (container.hasChildNodes()) {
-        container.removeChild(container.firstChild);
+    deleteBoxes();
+});
+
+function blackHover(e) {
+    e.target.classList.add('black');
+}
+
+function deleteBoxes() {
+    let boxes = document.querySelectorAll('.box');
+    for (let i = 0; i < boxes.length; i++) {
+        console.log(boxes[i]);
+        boxes[i].classList.remove('black');
     }
-    console.log(e);
-})
+}
 
 createGrid();
