@@ -1,10 +1,12 @@
 const container = document.querySelector('.container');
 const resetBtn = document.querySelector('#reset');
+let squaresPerSide = 16;
 
 let grid;
 
 function createGrid() {
-    for (let i = 0; i < (16 ** 2); i++) {
+    console.log(squaresPerSide);
+    for (let i = 0; i < (squaresPerSide * squaresPerSide); i++) {
         grid = document.createElement('div');
 
         grid.classList.add('box');
@@ -16,6 +18,8 @@ function createGrid() {
 
 resetBtn.addEventListener('click', (e) => {
     deleteBoxes();
+    squaresPerSide = popUp();
+    createGrid();
 });
 
 function blackHover(e) {
@@ -28,6 +32,11 @@ function deleteBoxes() {
         console.log(boxes[i]);
         boxes[i].classList.remove('black');
     }
+}
+
+function popUp() {
+    let squares = Number(prompt("How many squares per side?"));
+    return squares;
 }
 
 createGrid();
