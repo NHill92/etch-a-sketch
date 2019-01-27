@@ -3,9 +3,10 @@ const resetBtn = document.querySelector('#reset');
 let squaresPerSide = 16;
 
 let grid;
-
 function createGrid() {
     console.log(squaresPerSide);
+    container.style.gridTemplateColumns = `repeat(${squaresPerSide}, 1fr)`;
+    container.style.gridTemplateRows = `repeat(${squaresPerSide}, 1fr)`;
     for (let i = 0; i < (squaresPerSide * squaresPerSide); i++) {
         grid = document.createElement('div');
 
