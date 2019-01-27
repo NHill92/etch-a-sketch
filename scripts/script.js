@@ -1,10 +1,13 @@
 const container = document.querySelector('.container');
 const resetBtn = document.querySelector('#reset');
+const randomBtn = document.querySelector('#random-color');
+let isRandColor = false;
 let squaresPerSide = 16;
 
 let grid;
 function createGrid() {
     console.log(squaresPerSide);
+    console.log(isRandColor);
     container.style.gridTemplateColumns = `repeat(${squaresPerSide}, 1fr)`;
     container.style.gridTemplateRows = `repeat(${squaresPerSide}, 1fr)`;
     for (let i = 0; i < (squaresPerSide * squaresPerSide); i++) {
@@ -12,32 +15,58 @@ function createGrid() {
 
         grid.classList.add('box');
         container.appendChild(grid);
-
-        grid.addEventListener('mouseover', blackHover);
     }
+    colorSquares();
 }
 
 resetBtn.addEventListener('click', (e) => {
+    isRandColor = false;
     deleteBoxes();
     squaresPerSide = popUp();
     createGrid();
 });
 
-function blackHover(e) {
-    e.target.classList.add('black');
-}
+randomBtn.addEventListener('click', (e) => {
+    isRandColor = true;
+    deleteBoxes();
+    squaresPerSide = popUp();
+    createGrid();
+});
 
 function deleteBoxes() {
     let boxes = document.querySelectorAll('.box');
     for (let i = 0; i < boxes.length; i++) {
         console.log(boxes[i]);
-        boxes[i].classList.remove('black');
+        boxes[i].style.backgroundColor = 'white';
     }
 }
 
 function popUp() {
     let squares = Number(prompt("How many squares per side?"));
     return squares;
+}
+
+function getRandomColor() {
+    let symbols = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += symbols[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+function colorSquares() {
+    let square = document.querySelectorAll(".box");
+    let touchSquare = function(e) {
+        if (isRandColor) {
+            e.target.style.backgroundColor = getRandomColor();
+        } else {
+            e.target.style.backgroundColor = "black";
+        }
+    };
+    square.forEach(square => {
+        square.addEventListener('mouseover', touchSquare);
+    });
 }
 
 createGrid();
